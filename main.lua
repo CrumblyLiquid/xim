@@ -14,7 +14,7 @@ end
 
 --- Handle key event
 ---@param key string
-local function handle(key)
+function handle(key)
   print("Handling " .. key)
   local help = false
 
