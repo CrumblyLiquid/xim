@@ -47,7 +47,7 @@ end
 ---Generate a Keymap from config
 ---@param config MapConfig
 ---@param generate_mode_keybinds boolean
----@param sticky_key string
+---@param sticky_key string?
 ---@return Modemap
 function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
   ---@type Modemap
@@ -71,7 +71,7 @@ function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
           end
         )
 
-        if sticky_key then
+        if sticky_key ~= nil then
           local sticky_buttons = {}
           for _, button in pairs(to_mode_config.buttons) do
             table.insert(sticky_buttons, sticky_key .. button)
