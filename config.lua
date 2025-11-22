@@ -154,46 +154,10 @@ local M = {
       },
     },
 
-    ["shapes"] = {
-      name = "Shapes",
-      desc = "Switch between shapes to draw (rectangle, ellipse, arrow, etc.)",
-      buttons = { "w" },
-      commands = {
-        ["plain"] = {
-          name = "Plain Shape",
-          buttons = { "f" },
-          call = function()
-            actions.setShape("plain")
-          end,
-        },
-        ["rect"] = {
-          name = "Rect Shape",
-          buttons = { "d" },
-          call = function()
-            actions.setShape("rect")
-          end,
-        },
-        ["ellipse"] = {
-          name = "Ellipse Shape",
-          buttons = { "s" },
-          call = function()
-            actions.setShape("ellipse")
-          end,
-        },
-        ["arrow"] = {
-          name = "Arrow Shape",
-          buttons = { "a" },
-          call = function()
-            actions.setShape("arrow")
-          end,
-        },
-      },
-    },
-
     ["styles"] = {
       name = "Styles",
       desc = "Switch between line styles (plain, dotted, atc.)",
-      buttons = { "q" },
+      buttons = { "w" },
       commands = {
         ["plain"] = {
           name = "Plain Style",
@@ -221,6 +185,42 @@ local M = {
           buttons = { "a" },
           call = function()
             actions.setLineStyle("dot")
+          end,
+        },
+      },
+    },
+
+    ["shapes"] = {
+      name = "Shapes",
+      desc = "Switch between shapes to draw (rectangle, ellipse, arrow, etc.)",
+      buttons = { "q" },
+      commands = {
+        ["plain"] = {
+          name = "Plain Shape",
+          buttons = { "f" },
+          call = function()
+            actions.setShape("plain")
+          end,
+        },
+        ["rect"] = {
+          name = "Rect Shape",
+          buttons = { "d" },
+          call = function()
+            actions.setShape("rect")
+          end,
+        },
+        ["ellipse"] = {
+          name = "Ellipse Shape",
+          buttons = { "s" },
+          call = function()
+            actions.setShape("ellipse")
+          end,
+        },
+        ["arrow"] = {
+          name = "Arrow Shape",
+          buttons = { "a" },
+          call = function()
+            actions.setShape("arrow")
           end,
         },
       },
