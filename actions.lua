@@ -88,7 +88,7 @@ function M.setShape(shape, enabled)
   }
 
   -- Disable all shapes
-  if (shape == "plain") then
+  if shape == "plain" then
     for _, action in pairs(shapes) do
       M.executeAction(nil, action, false)
     end
@@ -119,16 +119,16 @@ end
 -- Sets colors
 function M.setColor(color)
   local colors = {
-    ["black"]  = 0x000000,
-    ["blue"]   = 0x6272a4,
-    ["green"]  = 0x50fa7b,
+    ["black"] = 0x000000,
+    ["blue"] = 0x6272a4,
+    ["green"] = 0x50fa7b,
     ["purple"] = 0xbd93f9,
-    ["red"]    = 0xff5555,
+    ["red"] = 0xff5555,
     ["orange"] = 0xffb86c,
-    ["cyan"]   = 0x8be9fd,
-    ["pink"]   = 0xff79c6,
+    ["cyan"] = 0x8be9fd,
+    ["pink"] = 0xff79c6,
     ["yellow"] = 0xf1fa8c,
-    ["white"]  = 0xf8f8f2,
+    ["white"] = 0xf8f8f2,
   }
 
   app.changeToolColor({ ["color"] = colors[color], ["selection"] = true })

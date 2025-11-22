@@ -4,7 +4,7 @@ function M.addKeybinds(keymap, mode, buttons, name, desc, callback)
   local bind = {
     name = name,
     desc = desc,
-    call = callback
+    call = callback,
   }
 
   if keymap[mode] == nil then

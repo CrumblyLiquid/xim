@@ -34,7 +34,10 @@ function handle(key)
     print("Executing " .. key)
   else
     print("Printing help for " .. key)
-    app.msgbox("Xim Help\n\n[" .. config.map[ximMode].name .. "]: " .. bind.name, { "Ok" })
+    app.msgbox(
+      "Xim Help\n\n[" .. config.map[ximMode].name .. "]: " .. bind.name,
+      { "Ok" }
+    )
   end
 
   if ximSticky == false and modeBefore == ximMode then
@@ -47,11 +50,7 @@ end
 local function registerCallback(index, bind_name, button)
   local funct_name = "funct" .. tostring(index)
   -- Create a function callback dynamically
-  local funct =
-      funct_name ..
-      " = function() handle(\"" ..
-      button ..
-      "\") end"
+  local funct = funct_name .. ' = function() handle("' .. button .. '") end'
 
   local compiled, err = load(funct)
   if compiled ~= nil then
@@ -67,13 +66,25 @@ local function registerCallback(index, bind_name, button)
 
     print("Registered: " .. funct)
   else
-    print("Failed to load .." .. funct_name .. ":\n" .. tostring(err) .. "\n" .. funct)
+    print(
+      "Failed to load .."
+        .. funct_name
+        .. ":\n"
+        .. tostring(err)
+        .. "\n"
+        .. funct
+    )
   end
 end
 
 local function registerCallbacks(keymap)
-  local index = 0
+  app.registerUi({
+    ["menu"] = "Xim: Info",
+    ["callback"] = "info",
+    ["accelerator"] = "F1",
+  })
 
+  local index = 0
   for _, mode in pairs(keymap) do
     for button, bind in pairs(mode) do
       registerCallback(index, bind.name, button)
@@ -85,14 +96,32 @@ local function registerCallbacks(keymap)
 end
 
 function initUi()
-  app.registerUi({ ["menu"] = "Xim: Info", ["callback"] = "info", ["accelerator"] = "F1" })
   registerCallbacks(ximKeymap)
 end
 
 function info()
-  app.msgbox("[" .. ximMode .. "]:\n" .. tostring(ximSticky), {})
+  local mode = "Mode: " .. config.map[ximMode].name .. " (" .. ximMode .. ")"
+  local state = "Sticky: " .. tostring(ximSticky)
+  -- TODO: Move author and version somewhere else
+  local author = "Author: CrumblyLiquid"
+  local version = "Version: 0.1.0"
+  app.msgbox(
+    "        Xim Plugin\n\nXim State:\n    "
+      .. mode
+      .. "\n    "
+      .. state
+      .. "\n\n"
+      .. author
+      .. "\n"
+      .. version,
+    { [1] = "Ok" }
+  )
 end
 
 ximMode = config.defaultMode
-ximKeymap = keybinds.generateKeymap(config.map, config.generateModeKeybinds, config.stickyKey)
+ximKeymap = keybinds.generateKeymap(
+  config.map,
+  config.generateModeKeybinds,
+  config.stickyKey
+)
 ximSticky = false

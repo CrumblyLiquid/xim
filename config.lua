@@ -30,22 +30,30 @@ M.map = {
       ["pen"] = {
         name = "Pen",
         buttons = { "f" },
-        call = function() actions.setTool("pen") end
+        call = function()
+          actions.setTool("pen")
+        end,
       },
       ["eraser"] = {
         name = "Eraser",
         buttons = { "d" },
-        call = function() actions.setTool("eraser") end
+        call = function()
+          actions.setTool("eraser")
+        end,
       },
       ["rect_sel"] = {
         name = "Select (rectangle)",
         buttons = { "s" },
-        call = function() actions.setTool("rect_sel") end
+        call = function()
+          actions.setTool("rect_sel")
+        end,
       },
       ["reg_select"] = {
         name = "Select (dynamic region)",
         buttons = { "a" },
-        call = function() actions.setTool("reg_sel") end
+        call = function()
+          actions.setTool("reg_sel")
+        end,
       },
     },
   },
@@ -58,24 +66,32 @@ M.map = {
       ["black"] = {
         name = "Black",
         buttons = { "f" },
-        call = function() actions.setColor("black") end
+        call = function()
+          actions.setColor("black")
+        end,
       },
       ["blue"] = {
         name = "Blue",
         buttons = { "d" },
-        call = function() actions.setColor("blue") end
+        call = function()
+          actions.setColor("blue")
+        end,
       },
       ["green"] = {
         name = "Green",
         buttons = { "s" },
-        call = function() actions.setColor("green") end
+        call = function()
+          actions.setColor("green")
+        end,
       },
       ["red"] = {
         name = "Red",
         buttons = { "a" },
-        call = function() actions.setColor("red") end
+        call = function()
+          actions.setColor("red")
+        end,
       },
-    }
+    },
   },
 
   ["size"] = {
@@ -86,27 +102,37 @@ M.map = {
       ["0"] = {
         name = "Very Fine",
         buttons = { "a" },
-        call = function() actions.setLineWidth(0) end
+        call = function()
+          actions.setLineWidth(0)
+        end,
       },
       ["1"] = {
         name = "Fine",
         buttons = { "s" },
-        call = function() actions.setLineWidth(1) end
+        call = function()
+          actions.setLineWidth(1)
+        end,
       },
       ["2"] = {
         name = "Medium",
         buttons = { "d" },
-        call = function() actions.setLineWidth(2) end
+        call = function()
+          actions.setLineWidth(2)
+        end,
       },
       ["3"] = {
         name = "Thick",
         buttons = { "f" },
-        call = function() actions.setLineWidth(3) end
+        call = function()
+          actions.setLineWidth(3)
+        end,
       },
       ["4"] = {
         name = "Very Thick",
         buttons = { "g" },
-        call = function() actions.setLineWidth(4) end
+        call = function()
+          actions.setLineWidth(4)
+        end,
       },
     },
   },
@@ -119,22 +145,30 @@ M.map = {
       ["plain"] = {
         name = "Plain Shape",
         buttons = { "f" },
-        call = function() actions.setShape("plain") end
+        call = function()
+          actions.setShape("plain")
+        end,
       },
       ["rect"] = {
         name = "Rect Shape",
         buttons = { "d" },
-        call = function() actions.setShape("rect") end
+        call = function()
+          actions.setShape("rect")
+        end,
       },
       ["ellipse"] = {
         name = "Ellipse Shape",
         buttons = { "s" },
-        call = function() actions.setShape("ellipse") end
+        call = function()
+          actions.setShape("ellipse")
+        end,
       },
       ["arrow"] = {
         name = "Arrow Shape",
         buttons = { "a" },
-        call = function() actions.setShape("arrow") end
+        call = function()
+          actions.setShape("arrow")
+        end,
       },
     },
   },
@@ -147,22 +181,30 @@ M.map = {
       ["plain"] = {
         name = "Plain Style",
         buttons = { "f" },
-        call = function() actions.setLineStyle("plain") end
+        call = function()
+          actions.setLineStyle("plain")
+        end,
       },
       ["dash"] = {
         name = "Dash Style",
         buttons = { "d" },
-        call = function() actions.setLineStyle("dash") end
+        call = function()
+          actions.setLineStyle("dash")
+        end,
       },
       ["dash_dot"] = {
         name = "Dash-Dot Style",
         buttons = { "s" },
-        call = function() actions.setLineStyle("dash_dot") end
+        call = function()
+          actions.setLineStyle("dash_dot")
+        end,
       },
       ["dot"] = {
         name = "Dash-Dot Style",
         buttons = { "a" },
-        call = function() actions.setLineStyle("dot") end
+        call = function()
+          actions.setLineStyle("dot")
+        end,
       },
     },
   },
