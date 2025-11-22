@@ -1,50 +1,79 @@
+---@module 'config'
 local config = require("config")
+---@module 'keybinds'
 local keybinds = require("keybinds")
 
 -- https://stackoverflow.com/questions/22831701/lua-read-beginning-of-a-string
-function string.starts(String, Start)
-  return string.sub(String, 1, string.len(Start)) == Start
+--- Checks if a given string starts with some substring
+---@param self string
+---@param substring string
+---@return boolean
+function string.starts_with(self, substring)
+  return string.sub(self, 1, string.len(substring)) == substring
 end
 
-function handle(key)
+--- Handle key event
+---@param key string
+local function handle(key)
   print("Handling " .. key)
   local help = false
 
   if config.helpKey ~= nil then
-    if string.starts(key, config.helpKey) then
+    if string.starts_with(key, config.helpKey) then
       help = true
       key = string.gsub(key, config.helpKey, "")
     end
   end
 
-  if ximKeymap[ximMode] == nil then
+  if XIM_KEYMAP[XIM_MODE] == nil then
     return
   end
 
-  if ximKeymap[ximMode][key] == nil then
+  if XIM_KEYMAP[XIM_MODE][key] == nil then
     return
   end
 
-  local bind = ximKeymap[ximMode][key]
+  local bind = XIM_KEYMAP[XIM_MODE][key]
 
-  local modeBefore = ximMode
+  local modeBefore = XIM_MODE
 
   if help == false then
-    ximKeymap[ximMode][key].call()
+    XIM_KEYMAP[XIM_MODE][key].call()
     print("Executing " .. key)
   else
     print("Printing help for " .. key)
+
+    local available_binds = ""
+
+    local modeMap = config.map[bind.target_mode]
+    for _, command in pairs(modeMap.commands) do
+      local buttons = table.concat(command.buttons, ", ")
+      available_binds = available_binds
+        .. "    ["
+        .. buttons
+        .. "]: "
+        .. command.name
+        .. "\n"
+    end
+
     app.msgbox(
-      "Xim Help\n\n[" .. config.map[ximMode].name .. "]: " .. bind.name,
-      { "Ok" }
+      "Xim Help\n\nMode: "
+        .. config.map[XIM_MODE].name
+        .. "\n["
+        .. key
+        .. "]: "
+        .. bind.name
+        .. "\n\nBinds:\n"
+        .. available_binds,
+      { [1] = "Ok" }
     )
   end
 
-  if ximSticky == false and modeBefore == ximMode then
-    ximMode = config.defaultMode
+  if XIM_STICKY == false and modeBefore == XIM_MODE then
+    XIM_MODE = config.defaultMode
   end
 
-  print("ximMode: " .. ximMode .. ", ximSticky: " .. tostring(ximSticky))
+  print("ximMode: " .. XIM_MODE .. ", ximSticky: " .. tostring(XIM_STICKY))
 end
 
 local function registerCallback(index, bind_name, button)
@@ -77,6 +106,27 @@ local function registerCallback(index, bind_name, button)
   end
 end
 
+--- Creates a dialog window with basic information about this plugin
+--- Note: Has to be global so Xournal++ can call it by its (string) name
+function info()
+  local mode = "Mode: " .. config.map[XIM_MODE].name .. " (" .. XIM_MODE .. ")"
+  local state = "Sticky: " .. tostring(XIM_STICKY)
+  -- TODO: Move author and version somewhere else
+  local author = "Author: CrumblyLiquid"
+  local version = "Version: 0.2.0"
+  app.msgbox(
+    "        Xim Plugin\n\nXim State:\n    "
+      .. mode
+      .. "\n    "
+      .. state
+      .. "\n\n"
+      .. author
+      .. "\n"
+      .. version,
+    { [1] = "Ok" }
+  )
+end
+
 local function registerCallbacks(keymap)
   app.registerUi({
     ["menu"] = "Xim: Info",
@@ -96,32 +146,17 @@ local function registerCallbacks(keymap)
 end
 
 function initUi()
-  registerCallbacks(ximKeymap)
+  registerCallbacks(XIM_KEYMAP)
 end
 
-function info()
-  local mode = "Mode: " .. config.map[ximMode].name .. " (" .. ximMode .. ")"
-  local state = "Sticky: " .. tostring(ximSticky)
-  -- TODO: Move author and version somewhere else
-  local author = "Author: CrumblyLiquid"
-  local version = "Version: 0.1.0"
-  app.msgbox(
-    "        Xim Plugin\n\nXim State:\n    "
-      .. mode
-      .. "\n    "
-      .. state
-      .. "\n\n"
-      .. author
-      .. "\n"
-      .. version,
-    { [1] = "Ok" }
-  )
-end
-
-ximMode = config.defaultMode
-ximKeymap = keybinds.generateKeymap(
+--- The mode that Xim is currently in
+--- (this affects what binds that will be active)
+---@type string
+XIM_MODE = config.defaultMode
+XIM_KEYMAP = keybinds.generateKeymap(
   config.map,
   config.generateModeKeybinds,
   config.stickyKey
 )
-ximSticky = false
+---@type boolean
+XIM_STICKY = false

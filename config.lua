@@ -1,26 +1,49 @@
+---@module 'actions'
 local actions = require("actions")
 
-local M = {}
+---@class CommandConfig
+---@field name string
+---@field desc string?
+---@field buttons string[]
+---@field call fun()
 
--- The default mode to return to
--- after we execute an action in other mode
--- (unless sticky mode is activated)
-M.defaultMode = "tools"
+---@class ModeConfig
+---@field name string
+---@field desc string?
+---@field buttons string[]
+---@field commands table<string, CommandConfig>
 
--- Generate keybinds to switch modes
--- in every other mode
--- (you can configure this manually if you want)
-M.generateModeKeybinds = true
+---@alias MapConfig table<string, ModeConfig>
 
--- Key to activate sticky mode
--- (Set to nil if you don't want sticky keys)
+---@class Config
+---@field defaultMode string
+---@field generateModeKeybinds boolean
+---@field stickyKey string?
+---@field helpKey string?
+---@field map MapConfig
+
+---@type Config
+local M = {
+  --- The default mode to return to
+  --- after we execute an action in other mode
+  --- (unless sticky mode is activated)
+  defaultMode = "tools",
+  --- Generate keybinds to switch modes
+  --- in every other mode
+  --- (you can configure this manually if you want)
+  generateModeKeybinds = true,
+}
+
+--- Key to activate sticky mode
+--- (Set to nil if you don't want sticky keys)
 M.stickyKey = "<Alt>"
 
--- Help key (if used with another bind)
--- opens the help menu for specific keybinds
+--- Help key (if used with another bind)
+--- opens the help menu for specific keybinds
 M.helpKey = "<Shift>"
 
--- Keybinds map
+--- Keybinds map
+
 M.map = {
   ["tools"] = {
     name = "Tools",
@@ -60,7 +83,7 @@ M.map = {
 
   ["colors"] = {
     name = "Colors",
-    description = "Switch between predefined colors (can be set in colors.lua)",
+    desc = "Switch between predefined colors (can be set in colors.lua)",
     buttons = { "t" },
     commands = {
       ["black"] = {
@@ -96,7 +119,7 @@ M.map = {
 
   ["size"] = {
     name = "Size",
-    description = "Switch between different line widths",
+    desc = "Switch between different line widths",
     buttons = { "e" },
     commands = {
       ["0"] = {
@@ -139,7 +162,7 @@ M.map = {
 
   ["shapes"] = {
     name = "Shapes",
-    description = "Switch between shapes to draw (rectangle, ellipse, arrow, etc.)",
+    desc = "Switch between shapes to draw (rectangle, ellipse, arrow, etc.)",
     buttons = { "w" },
     commands = {
       ["plain"] = {
@@ -175,7 +198,7 @@ M.map = {
 
   ["styles"] = {
     name = "Styles",
-    description = "Switch between line styles (plain, dotted, atc.)",
+    desc = "Switch between line styles (plain, dotted, atc.)",
     buttons = { "q" },
     commands = {
       ["plain"] = {

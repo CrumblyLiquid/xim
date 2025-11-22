@@ -1,38 +1,73 @@
 local M = {}
 
-function M.addKeybinds(keymap, mode, buttons, name, desc, callback)
+---@class Keybind
+---@field name string
+---@field target_mode string
+---@field desc string
+---@field call fun()
+
+---@alias Modemap table<string, Keymap>
+
+---@alias Keymap table<string, Keybind>
+
+--- Adds a new keybind to the specified keymap
+---@param modemap Modemap
+---@param mode string
+---@param target_mode string
+---@param buttons string[]
+---@param name string
+---@param desc string
+---@param callback fun()
+function M.addKeybinds(
+  modemap,
+  mode,
+  target_mode,
+  buttons,
+  name,
+  desc,
+  callback
+)
+  ---@type Keybind
   local bind = {
     name = name,
+    target_mode = target_mode,
     desc = desc,
     call = callback,
   }
 
-  if keymap[mode] == nil then
-    keymap[mode] = {}
+  if modemap[mode] == nil then
+    modemap[mode] = {}
   end
 
   for _, button in pairs(buttons) do
-    keymap[mode][button] = bind
+    modemap[mode][button] = bind
   end
 end
 
+---Generate a Keymap from config
+---@param config MapConfig
+---@param generate_mode_keybinds boolean
+---@param sticky_key string
+---@return Modemap
 function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
-  local keybinds = {}
+  ---@type Modemap
+  local modemap = {}
 
   for mode_name, mode_config in pairs(config) do
     if generate_mode_keybinds then
       -- Add mode keybinds to every other mode
       for to_mode_name, to_mode_config in pairs(config) do
         M.addKeybinds(
-          keybinds,
+          modemap,
           mode_name,
+          to_mode_name,
           to_mode_config.buttons,
           to_mode_config.name,
           to_mode_config.desc,
           function()
             print("Setting mode " .. to_mode_name)
-            ximMode = to_mode_name
-            ximSticky = false
+            XIM_MODE = to_mode_name
+            XIM_STICKY = false
           end
         )
 
@@ -43,14 +78,15 @@ function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
           end
 
           M.addKeybinds(
-            keybinds,
+            modemap,
             mode_name,
+            to_mode_name,
             sticky_buttons,
             to_mode_config.name,
             to_mode_config.desc,
             function()
-              ximMode = to_mode_name
-              ximSticky = true
+              XIM_MODE = to_mode_name
+              XIM_STICKY = true
             end
           )
         end
@@ -60,7 +96,8 @@ function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
     -- Add each command
     for _, command_config in pairs(mode_config.commands) do
       M.addKeybinds(
-        keybinds,
+        modemap,
+        mode_name,
         mode_name,
         command_config.buttons,
         command_config.name,
@@ -70,7 +107,7 @@ function M.generateKeymap(config, generate_mode_keybinds, sticky_key)
     end
   end
 
-  return keybinds
+  return modemap
 end
 
 return M
