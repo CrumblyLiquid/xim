@@ -59,7 +59,7 @@ function M.setTool(tool)
 end
 
 -- Set Line Width
--- width: 0 - 4 (0 = very fine, 4 = very thick)
+-- width: 1 - 5 (1 = very fine, 5 = very thick)
 function M.setLineWidth(width)
   local options = {
     "VERY_FINE",

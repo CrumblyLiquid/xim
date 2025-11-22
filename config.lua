@@ -103,35 +103,35 @@ M.map = {
         name = "Very Fine",
         buttons = { "a" },
         call = function()
-          actions.setLineWidth(0)
+          actions.setLineWidth(1)
         end,
       },
       ["1"] = {
         name = "Fine",
         buttons = { "s" },
         call = function()
-          actions.setLineWidth(1)
+          actions.setLineWidth(2)
         end,
       },
       ["2"] = {
         name = "Medium",
         buttons = { "d" },
         call = function()
-          actions.setLineWidth(2)
+          actions.setLineWidth(3)
         end,
       },
       ["3"] = {
         name = "Thick",
         buttons = { "f" },
         call = function()
-          actions.setLineWidth(3)
+          actions.setLineWidth(4)
         end,
       },
       ["4"] = {
         name = "Very Thick",
         buttons = { "g" },
         call = function()
-          actions.setLineWidth(4)
+          actions.setLineWidth(5)
         end,
       },
     },
